@@ -15,6 +15,12 @@ module.exports = {
               type: 'string'
             }
           },
+          excludeImports: {
+            type: 'array',
+            items: {
+              type: 'string'
+            }
+          },
           method: {
             type: 'string',
             enum: ['all', 'only-parent']
@@ -68,6 +74,9 @@ function evaluateImport(node, config, context) {
   if (!value.startsWith('../') && !value.startsWith('./')) {
     return;
   }
+  if (config.excludeImports.includes(value)) {
+    return;
+  }
 
   let canFix = false;
   const currentFileDirectory = path.dirname(context.getFilename());
@@ -100,12 +109,14 @@ function evaluateImport(node, config, context) {
 function getConfiguration(context) {
   const options = {
     ignore: [],
+    excludeImports: [],
     method: 'only-parent',
     ...context.options[0],
   };
 
   return {
     ignorePatterns: options.ignore,
+    excludeImports: options.excludeImports,
     replaceMethod: options.method,
     replaceAliases: options.aliases.map(alias => ({
       replaceDir: path.resolve(alias.path),
