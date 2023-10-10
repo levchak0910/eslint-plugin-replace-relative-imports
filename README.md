@@ -1,16 +1,20 @@
-# eslint-plugin-replace-relative-imports
+# eslint-plugin-replace-relative-imports-fork
 
 This plugin replaces relative parent imports with a defined alias and is meant to be
 used in conjunction with applications built with either webpack `alias` definitions
 or `paths` for typescript.
 
+## STATUS
+
+Upstream repository seems not supported anymore, therefore this fork exist. This repo and package will be removed when upstream repository catch up with all bug fixes / improvements.
+
 ## Usage
 
-Add `replace-relative-imports` to the plugins section of your `eslint` configuration.
+Add `replace-relative-imports-fork` to the plugins section of your `eslint` configuration.
 
 ```json
 {
-  "plugins": ["replace-relative-imports"]
+  "plugins": ["replace-relative-imports-fork"]
 }
 ```
 
@@ -19,7 +23,7 @@ Then add the replace imports rule:
 ```json
 {
   "rules": {
-    "replace-relative-imports/replace": ["error", {
+    "replace-relative-imports-fork/replace": ["error", {
       "aliases": [
         { "name": "app", "path": "./src" }
       ]
@@ -50,7 +54,7 @@ Example:
 ```json
 {
   "rules": {
-    "replace-relative-imports/replace": ["error", {
+    "replace-relative-imports-fork/replace": ["error", {
       "ignore": ["**/__tests__/*"],
       "excludeImports": [
         "@/utils/any",
