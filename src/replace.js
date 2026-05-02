@@ -55,8 +55,9 @@ module.exports = {
     return {
       ImportDeclaration: node => {
         const config = getConfiguration(context);
+        const filename = context.filename || context.getFilename();
 
-        if (config.ignorePatterns.some(pattern => minimatch(context.getFilename(), pattern))) {
+        if (config.ignorePatterns.some(pattern => minimatch(filename, pattern))) {
           return;
         }
 
@@ -79,7 +80,8 @@ function evaluateImport(node, config, context) {
   }
 
   let canFix = false;
-  const currentFileDirectory = path.dirname(context.getFilename());
+  const filename = context.filename || context.getFilename();
+  const currentFileDirectory = path.dirname(filename);
   for (const alias of config.replaceAliases) {
     const { replaceDir, replaceWith } = alias;
     const fullImportPath = path.resolve(currentFileDirectory, value);
